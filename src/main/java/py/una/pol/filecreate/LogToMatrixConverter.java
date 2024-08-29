@@ -59,6 +59,7 @@ public class LogToMatrixConverter {
             algoritmo.add(tiempo);
             algoritmo2.add(matrizDatos);
             String algorithm = " ";
+
             while ((line = reader.readLine()) != null) {
 
                 if (line.contains("Iniciamos la prueba utilzando el algorirmo")) {
@@ -67,12 +68,15 @@ public class LogToMatrixConverter {
                     String crossover = findValueForLabel(reader.readLine(), "Probabilidad de cruce:");
                     String mutation = findValueForLabel(reader.readLine(), "Probabilidad de mutacion:");
                     String poblacion = findValueForLabel(reader.readLine(), "población:");
-                    String sheetName = "_PC=" + crossover + "_PM=" + mutation + "_POB=" + poblacion;
+                   // String sheetName = "_PC=" + crossover + "_PM=" + mutation + "_POB=" + poblacion;
+                    String sheetName = "_PROMEDIOS";
+
                     // Verificar si la hoja ya existe
                     int sheetIndex = workbook.getSheetIndex(sheetName);
+
                     if (sheetIndex >= 0) {
-                        sheet = workbook.getSheetAt(sheetIndex);
-                        currentRow = sheet.createRow(rowIndex);
+                      sheet = workbook.getSheetAt(sheetIndex);
+                       /* currentRow = sheet.createRow(rowIndex);
                         rowIndex++;
 
                         CellRangeAddress cellRange = new CellRangeAddress(currentRow.getRowNum(), currentRow.getRowNum(), 0, 10);
@@ -82,10 +86,10 @@ public class LogToMatrixConverter {
                         mergedCell.setCellValue("ALGORITMO: " + algorithm + " PROBABILIDAD DE CRUCE: " + crossover + " PROBABILDAD DE MUTACIÓN: " + mutation + " CANTIDAD DE POBLACIÓN: " + poblacion);
                         currentRow = sheet.createRow(rowIndex);
                         rowIndex++;
-
+                        */
                     } else {
-                        sheet = workbook.createSheet(sheetName);
-                        rowIndex = 0;
+                       sheet = workbook.createSheet(sheetName);
+                      /*  rowIndex = 0;
                         currentRow = sheet.createRow(rowIndex);
                         rowIndex += 5; // Dejar 4 filas libres
 
@@ -106,6 +110,8 @@ public class LogToMatrixConverter {
                         mergedCell.setCellValue("ALGORITMO: " + algorithm + " PROBABILIDAD DE CRUCE: " + crossover + " PROBABILDAD DE MUTACIÓN: " + mutation + " CANTIDAD DE POBLACIÓN: " + poblacion);
                         currentRow = sheet.createRow(rowIndex);
                         rowIndex++;
+
+                       */
                     }
 
                 } else if (line.contains("GENERACION ")) {
@@ -150,34 +156,36 @@ public class LogToMatrixConverter {
                     }
                     algoritmo2.get(contadorAlgoritmo)[fila][columna].setChromosome(chromosome);
 
-                } else if (line.contains("Aca finaliza la simulacion: 30")) {
-                    currentRow.createCell(0);
+                }
+               else if (line.contains("Aca finaliza la simulacion: 30")) {
+                    /*currentRow.createCell(0);
                     currentRow.createCell(1).setCellValue(generation);
                     currentRow.createCell(2, CellType.NUMERIC).setCellValue(fitness);
                     currentRow.createCell(3, CellType.NUMERIC).setCellValue(bloqueoPromedio);
                     currentRow.createCell(4, CellType.NUMERIC).setCellValue(averageSur * 1000000);
                     currentRow.createCell(5, CellType.NUMERIC).setCellValue(standarDesviation * 1000000);
-                    currentRow.createCell(6).setCellValue(chromosome);
-                    rowIndex -= 30;
+                    currentRow.createCell(6).setCellValue(chromosome);*/
+                    //rowIndex -= 30;
                     columna = 0;
-                    currentRow = sheet.getRow(rowIndex);
-                } else if (line.contains("Aca finaliza la simulacion:")) {
-                    currentRow.createCell(0);
+                    //currentRow = sheet.getRow(rowIndex);
+                }
+                else if (line.contains("Aca finaliza la simulacion:")) {
+                   /* currentRow.createCell(0);
                     currentRow.createCell(1).setCellValue(generation);
                     currentRow.createCell(2, CellType.NUMERIC).setCellValue(fitness);
                     currentRow.createCell(3, CellType.NUMERIC).setCellValue(bloqueoPromedio);
                     currentRow.createCell(4, CellType.NUMERIC).setCellValue(averageSur * 1000000);
                     currentRow.createCell(5, CellType.NUMERIC).setCellValue(standarDesviation * 1000000);
-                    currentRow.createCell(6).setCellValue(chromosome);
-                    currentRow = sheet.createRow(rowIndex);
-                    rowIndex++;
+                    currentRow.createCell(6).setCellValue(chromosome);*/
+                    //currentRow = sheet.createRow(rowIndex);
+                    //rowIndex++;
                     fila++;
                     columna=0;
                 } else if (line.contains("El tiempo de la simulacion")) {
                     tiempoSimulacion = findValueForLabel(line, "El tiempo de la simulacion ");
-                    currentRow.createCell(0, CellType.NUMERIC).setCellValue(Integer.valueOf(tiempoSimulacion.substring(7, tiempoSimulacion.lastIndexOf(".")).trim()));
-                    rowIndex++;
-                    currentRow = sheet.getRow(rowIndex);
+                    //currentRow.createCell(0, CellType.NUMERIC).setCellValue(Integer.valueOf(tiempoSimulacion.substring(7, tiempoSimulacion.lastIndexOf(".")).trim()));
+                   // rowIndex++;
+                   // currentRow = sheet.getRow(rowIndex);
                     count++;
                     ////algoritmo.get(contadorAlgoritmo)[fila][columna] = Double.parseDouble(tiempo); aca setear el tiempo
                     if (algoritmo2.get(contadorAlgoritmo)[fila][columna] == null) {
@@ -187,14 +195,26 @@ public class LogToMatrixConverter {
                     columna++;
                 }
                 if (count == 30) {
-                    currentRow = sheet.createRow(rowIndex);
+                   /* currentRow = sheet.createRow(rowIndex);
                     currentRow.createCell(0).setCellFormula("AVERAGE(A" + (rowIndex - 29) + ":A" + (rowIndex) + ")");
                     currentRow.createCell(4).setCellFormula("AVERAGE(E" + (rowIndex - 29) + ":E" + (rowIndex) + ")/1000000");
-                    currentRow.createCell(5).setCellFormula("AVERAGE(F" + (rowIndex - 29) + ":F" + (rowIndex) + ")/1000000");
-                    rowIndex++;
+                    currentRow.createCell(5).setCellFormula("AVERAGE(F" + (rowIndex - 29) + ":F" + (rowIndex) + ")/1000000");*/
+                 //   rowIndex++;
                     count = 0;
                     contadorAlgoritmo++;
-                    calcularPromediosPorColumna(algoritmo2.get(algoritmo2.size()-1),algorithm);
+                    rowIndex++;
+                    currentRow = sheet.createRow(rowIndex);
+                    rowIndex++;
+
+                    CellRangeAddress cellRange = new CellRangeAddress(currentRow.getRowNum(), currentRow.getRowNum(), 0, 10);
+                    sheet.addMergedRegion(cellRange);
+
+                    Cell mergedCell = currentRow.createCell(0);
+                    mergedCell.setCellValue("ALGORITMO: " + algorithm);
+                    //currentRow = sheet.createRow(rowIndex);
+                    rowIndex++;
+                    calcularPromediosPorColumna(algoritmo2.get(algoritmo2.size()-1),algorithm, sheet,rowIndex);
+                    rowIndex+= 101;
                     algoritmo2.add(matrizDatos);
                     fila=0;
                     columna=0;
@@ -283,7 +303,7 @@ public class LogToMatrixConverter {
 
 
     // Método para calcular el promedio de cada columna pasando directamente la matriz
-    public static void calcularPromediosPorColumna(Datos[][] matriz, String algorithm) {
+    /*public static void calcularPromediosPorColumna(Datos[][] matriz, String algorithm,  Workbook workbook ) {
         int filas = matriz.length;
         int columnas = matriz[0].length;
 
@@ -313,26 +333,72 @@ public class LogToMatrixConverter {
                 double promedioBloqueoPromedio = sumaBloqueoPromedio / conteoElementos;
                 double promedioAverageSur = sumaAverageSur / conteoElementos;
                 double promedioStandarDesviation = sumaStandarDesviation / conteoElementos;
- //               double promedioTiempoSimulacion = sumaTiempoSimulacion / conteoElementos;
+ //             double promedioTiempoSimulacion = sumaTiempoSimulacion / conteoElementos;
 
                 System.out.println("Columna " + j + ":");
                 System.out.println("Promedio Fitness: " + promedioFitness);
                 System.out.println("Promedio Bloqueo Promedio: " + promedioBloqueoPromedio);
                 System.out.println("Promedio AverageSur: " + promedioAverageSur);
                 System.out.println("Promedio Standar Desviation: " + promedioStandarDesviation);
+                System.out.println("Algoritmo: "+ algorithm);
   //              System.out.println("Promedio Tiempo Simulacion: " + promedioTiempoSimulacion);
+            }
+        }
+    }*/
+
+    public static void calcularPromediosPorColumna(Datos[][] matriz, String algorithm, Sheet sheet,int rowIndex ) {
+        int filas = matriz.length;
+        int columnas = matriz[0].length;
+
+        // Crear una hoja específica para los promedios del algoritmo
+        //Sheet sheet = workbook.createSheet("Promedios_" + algorithm);
+        Row headerRow = sheet.createRow(0);
+
+        // Crear las celdas de encabezado
+        headerRow.createCell(0).setCellValue("Columna");
+        headerRow.createCell(1).setCellValue("Promedio Fitness");
+        headerRow.createCell(2).setCellValue("Promedio Bloqueo Promedio");
+        headerRow.createCell(3).setCellValue("Promedio AverageSur");
+        headerRow.createCell(4).setCellValue("Promedio Standar Desviation");
+        headerRow.createCell(5).setCellValue("Promedio Generación");
+
+        for (int j = 0; j < columnas; j++) {
+            double sumaFitness = 0;
+            double sumaBloqueoPromedio = 0;
+            double sumaAverageSur = 0;
+            double sumaStandarDesviation = 0;
+            double sumaGeneracion = 0;
+            int conteoElementos = 0;
+
+            for (int i = 0; i < filas; i++) {
+                if (matriz[i][j] != null) {
+                    sumaFitness += Double.parseDouble(matriz[i][j].getFitness());
+                    sumaBloqueoPromedio += Double.parseDouble(matriz[i][j].getBloqueoPromedio());
+                    sumaAverageSur += matriz[i][j].getAverageSur();
+                    sumaStandarDesviation += matriz[i][j].getStandarDesviation();
+                    sumaGeneracion += Double.parseDouble(matriz[i][j].getGeneration());
+                    conteoElementos++;
+                }
+            }
+
+            // Calcular los promedios
+            if (conteoElementos > 0) {
+                double promedioFitness = sumaFitness / conteoElementos;
+                double promedioBloqueoPromedio = sumaBloqueoPromedio / conteoElementos;
+                double promedioAverageSur = sumaAverageSur / conteoElementos;
+                double promedioStandarDesviation = sumaStandarDesviation / conteoElementos;
+                double promedioGeneracion = sumaGeneracion / conteoElementos;
+
+                // Escribir los promedios en la hoja
+                Row row = sheet.createRow(rowIndex++);
+                row.createCell(0).setCellValue(j+1); // Número de columna
+                row.createCell(1).setCellValue(Math.ceil(promedioFitness));
+                row.createCell(2).setCellValue(promedioBloqueoPromedio);
+                row.createCell(3).setCellValue(promedioAverageSur);
+                row.createCell(4).setCellValue(promedioStandarDesviation);
+                row.createCell(5).setCellValue(Math.ceil(promedioGeneracion));
             }
         }
     }
 
-//    private static String combineColumns(Row row) {
-//        StringBuilder combinedValue = new StringBuilder();
-//        for (int i = 0; i < 6; i++) {
-//            Cell cell = row.getCell(i);
-//            if (cell != null) {
-//                combinedValue.append(cell.getStringCellValue()).append(" ");
-//            }
-//        }
-//        return combinedValue.toString().trim();
-//    }
 }
